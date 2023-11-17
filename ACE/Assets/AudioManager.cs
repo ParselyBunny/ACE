@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public AudioSource MusicSource;
+    IEnumerator _coroutine;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        MusicSource = GetComponent<AudioSource>();
+        MusicSource.volume = 0.0f;
+        MusicSource.Play();
+
+        _coroutine = ThemeFadeIn(0.075f);
+        StartCoroutine(_coroutine);
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator ThemeFadeIn(float waitTime)
     {
-        
+        while (MusicSource.volume < 1.0f)
+        {
+            yield return new WaitForSeconds(waitTime);
+            MusicSource.volume += 0.005f;
+        }
     }
 }
