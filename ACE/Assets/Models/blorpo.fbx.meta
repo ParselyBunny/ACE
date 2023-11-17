@@ -1,8 +1,14 @@
 fileFormatVersion: 2
-guid: 0a9e41e94e5371e468c18166db30ec5a
+guid: 32cc49f4168daac4cad9279a1abe8123
 ModelImporter:
   serializedVersion: 21300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 5602810628461737584
+    second: BlorpoRig|Idle
+  - first:
+      74: -5766642153530301080
+    second: BlorpoRig|Move
   externalObjects: {}
   materials:
     materialImportMode: 2
