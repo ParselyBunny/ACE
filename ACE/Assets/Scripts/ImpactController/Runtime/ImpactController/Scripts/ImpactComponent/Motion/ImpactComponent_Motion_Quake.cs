@@ -122,14 +122,19 @@ namespace JTools
                 }
             }
 
+
+
             if (!isGrounded)
                 m_rig.velocity = MoveAir(movement * 60f * Time.fixedDeltaTime, m_rig.velocity);
             else
                 m_rig.velocity = MoveGround(movement * 60f * Time.fixedDeltaTime, m_rig.velocity);
 
-            //m_rig.velocity = movement * Time.fixedDeltaTime * 60f; //Movement is applied here. Motion is scaled on framerate to smooth things out.
-
-            ///
+            // Parsely: I'm adding jumping here because figuring out this code sucks
+            if (player.inputComponent.inputData.pressedJump)
+            {
+                movement.y = jumpPower + ((isSprinting) ? jumpPower * 0.15f : 0f); //Jumppower is scaled up if enhanced jumping is enabled.
+                m_rig.velocity = new Vector3(m_rig.velocity.x, m_rig.velocity.y + movement.y, m_rig.velocity.z);
+            }
         }
 
         public override void ComponentUpdate(ImpactController player)
