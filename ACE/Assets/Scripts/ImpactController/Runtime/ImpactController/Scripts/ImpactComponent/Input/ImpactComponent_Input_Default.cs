@@ -44,9 +44,9 @@ namespace JTools
             inputData.holdingCrouch = Input.GetKey(keyCrouch);
             inputData.releasedCrouch = Input.GetKeyUp(keyCrouch);
 
-            inputData.pressedJump = Input.GetKeyDown(keyJump);
-            inputData.holdingJump = Input.GetKey(keyJump);
-            inputData.releasedJump = Input.GetKeyUp(keyJump);
+            inputData.pressedJump = Input.GetMouseButtonDown((int)buttonPrimary);
+            inputData.holdingJump = Input.GetMouseButton((int)buttonPrimary);
+            inputData.releasedJump = Input.GetMouseButtonUp((int)buttonPrimary);
 
             inputData.pressedSprint = Input.GetKeyDown(keySprint);
             inputData.holdingSprint = Input.GetKey(keySprint);
