@@ -9,7 +9,6 @@ namespace JTools
 {
     public class ImpactController : MonoBehaviour
     {
-
         /// <summary>
         /// This is only active if there's at least one controller who has "assignCurrent" set to true.
         /// </summary>
@@ -37,9 +36,14 @@ namespace JTools
         public CapsuleCollider capsuleCollider; //Reference to the capsule collider component, cached for performance reasons.
         [HideInInspector]
         public AudioSource soundComponent; //Reference to the player's audiosource component.
+        [Space]
 
-        [HideInInspector]
-        public float PlayerVolume = 5.0f;
+        [Header("Blorpo Settings")]
+        public float PlayerVolume = 2.0f;
+        [Range(0f, 1f)] public float VolumeAbsorption = 0.25f;
+        public AudioClip Cronch;
+        public AudioSource SFXAudioSource;
+
 
         void Start()
         {
@@ -309,13 +313,14 @@ namespace JTools
             Vector3 newScale = transform.localScale;
             newScale.x += (volume / 100);
             newScale.y += (volume / 100);
+            newScale.z += (volume / 100);
             transform.localScale = newScale;
-            PlayerVolume += volume / 10;
+            PlayerVolume += volume * VolumeAbsorption;
             Debug.Log("Blorbo ate trash of volume " + volume + 
                 " and grew to a volume of " + PlayerVolume);
 
             // Move the camera back a bit so we can still see our larger blorbo
-        ImpactComponent_Camera_Default camera = (ImpactComponent_Camera_Default)current.cameraComponent;
+            ImpactComponent_Camera_Default camera = (ImpactComponent_Camera_Default)current.cameraComponent;
             
             if (camera.perspective + 0.05f <= 1.0f)
             {
@@ -328,7 +333,9 @@ namespace JTools
             
             camera.thirdPersonOrbitDistance += 0.1f;
 
-            // TODO: play a sound
+            // play a sound
+            SFXAudioSource.clip = Cronch;
+            SFXAudioSource.Play();
             // TODO: generate some bubbles
         }
 
