@@ -37,7 +37,9 @@ namespace JTools
         public CapsuleCollider capsuleCollider; //Reference to the capsule collider component, cached for performance reasons.
         [HideInInspector]
         public AudioSource soundComponent; //Reference to the player's audiosource component.
-        ///
+
+        [HideInInspector]
+        public float PlayerVolume = 5.0f;
 
         void Start()
         {
@@ -299,6 +301,35 @@ namespace JTools
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(transform.position + Vector3.up * playerHeight * 0.5f, new Vector3(playerRadius * 2f, playerHeight, playerRadius * 2f));
             Gizmos.DrawLine(transform.position + Vector3.up * playerHeight * 0.5f, (transform.position + Vector3.up * playerHeight * 0.5f) - Vector3.up * playerHeight * 0.66f);
+        }
+
+        public void EatTrash(float volume)
+        {
+            // Increase size of player based on the volume of the object
+            Vector3 newScale = transform.localScale;
+            newScale.x += (volume / 100);
+            newScale.y += (volume / 100);
+            transform.localScale = newScale;
+            PlayerVolume += volume / 10;
+            Debug.Log("Blorbo ate trash of volume " + volume + 
+                " and grew to a volume of " + PlayerVolume);
+
+            // Move the camera back a bit so we can still see our larger blorbo
+        ImpactComponent_Camera_Default camera = (ImpactComponent_Camera_Default)current.cameraComponent;
+            
+            if (camera.perspective + 0.05f <= 1.0f)
+            {
+                camera.perspective += 0.01f;
+            }
+            else
+            {
+                camera.perspective = 1.0f;
+            }
+            
+            camera.thirdPersonOrbitDistance += 0.1f;
+
+            // TODO: play a sound
+            // TODO: generate some bubbles
         }
 
     }
